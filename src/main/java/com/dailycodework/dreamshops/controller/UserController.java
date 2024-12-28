@@ -4,6 +4,7 @@ import com.dailycodework.dreamshops.exceptions.AlreadyExistsException;
 import com.dailycodework.dreamshops.exceptions.ResourceNotFoundException;
 import com.dailycodework.dreamshops.model.User;
 import com.dailycodework.dreamshops.request.CreateUserRequest;
+import com.dailycodework.dreamshops.request.UserUpdateRequest;
 import com.dailycodework.dreamshops.response.ApiResponse;
 import com.dailycodework.dreamshops.service.user.IUserService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,17 @@ public class UserController {
             return ResponseEntity.ok(new ApiResponse("Create User Success!", user));
         } catch (AlreadyExistsException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+
+    @PutMapping("/update/user/{userId}")
+    public ResponseEntity<ApiResponse> updateUser(@RequestBody UserUpdateRequest request, @PathVariable Long userId) {
+
+        try {
+            User user = userService.updateUser(request, userId);
+            return ResponseEntity.ok(new ApiResponse("Update User Success!", user));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
         }
     }
 }
