@@ -1,32 +1,38 @@
 package com.dailycodework.dreamshops.controller;
 
 import com.dailycodework.dreamshops.exceptions.ResourceNotFoundException;
+import com.dailycodework.dreamshops.model.Cart;
+import com.dailycodework.dreamshops.model.User;
 import com.dailycodework.dreamshops.response.ApiResponse;
 import com.dailycodework.dreamshops.service.cart.ICartItemService;
 import com.dailycodework.dreamshops.service.cart.ICartService;
+import com.dailycodework.dreamshops.service.user.IUserService;
+import com.dailycodework.dreamshops.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequiredArgsConstructor    
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/${api.prefix}/cartItems")
 public class CartItemController {
 
     private final ICartItemService cartItemService;
     private final ICartService cartService;
+    private final IUserService userService;
 
     @PostMapping("/item/add")
-    public ResponseEntity<ApiResponse> addItemToCart(@RequestParam Long cartId,
-                                                     @RequestParam Long productId,
-                                                     @RequestParam Integer quantity) {
+    public ResponseEntity<ApiResponse> addItemToCart(
+            @RequestParam Long productId,
+            @RequestParam Integer quantity) {
         try {
+            User user = userService.getUserById(1L);
 
-            if (cartId == null|| cartId == 0L) {
-                cartId = cartService.initializeNewCart();
-            }
-            cartItemService.addItemToCart(cartId, productId, quantity);
+            Cart cart = cartService.initializeNewCart(user);
+
+
+            cartItemService.addItemToCart(cart.getId(), productId, quantity);
             return ResponseEntity.ok(new ApiResponse("Add Item Success", null));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Not Found", null));
