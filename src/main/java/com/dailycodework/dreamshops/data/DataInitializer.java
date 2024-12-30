@@ -5,7 +5,6 @@ import com.dailycodework.dreamshops.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +22,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
 
     private void createDefaultUserIfNotExists() {
         for (int i = 0; i < 5; i++) {
-            String defaultEmail = "user"+i+"@gmail.com";
+            String defaultEmail = "user" + i + "@gmail.com";
 
             if (userRepository.existsByEmail(defaultEmail)) {
                 continue;
