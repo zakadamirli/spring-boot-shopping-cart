@@ -7,7 +7,6 @@ import com.dailycodework.dreamshops.response.ApiResponse;
 import com.dailycodework.dreamshops.service.cart.ICartItemService;
 import com.dailycodework.dreamshops.service.cart.ICartService;
 import com.dailycodework.dreamshops.service.user.IUserService;
-import com.dailycodework.dreamshops.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
