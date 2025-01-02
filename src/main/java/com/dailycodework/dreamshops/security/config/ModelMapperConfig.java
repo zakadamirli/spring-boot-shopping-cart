@@ -1,4 +1,4 @@
-package com.dailycodework.dreamshops.config;
+package com.dailycodework.dreamshops.security.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

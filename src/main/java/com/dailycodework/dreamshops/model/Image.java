@@ -1,6 +1,6 @@
 package com.dailycodework.dreamshops.model;
 
-import com.dailycodework.dreamshops.config.BlobSerializer;
+import com.dailycodework.dreamshops.security.config.BlobSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

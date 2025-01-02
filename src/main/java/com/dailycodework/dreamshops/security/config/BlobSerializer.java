@@ -1,4 +1,4 @@
-package com.dailycodework.dreamshops.config;
+package com.dailycodework.dreamshops.security.config;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
