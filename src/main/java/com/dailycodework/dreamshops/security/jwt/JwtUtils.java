@@ -16,8 +16,11 @@ import java.util.List;
 
 @Component
 public class JwtUtils {
-    @Value("{}") //next start here
+
+    @Value("${auth.token.jwtSecret}")
     private String jwtSecret;
+
+    @Value("${auth.token.expirationInMils}")
     private int expirationTime;
 
     public String generateTokenForUser(Authentication authentication) {
