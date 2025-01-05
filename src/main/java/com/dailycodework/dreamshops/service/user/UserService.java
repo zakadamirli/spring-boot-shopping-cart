@@ -9,6 +9,9 @@ import com.dailycodework.dreamshops.request.CreateUserRequest;
 import com.dailycodework.dreamshops.request.UserUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,6 +22,7 @@ public class UserService implements IUserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public User getUserById(Long userId) {
@@ -34,7 +38,7 @@ public class UserService implements IUserService {
                     User user = new User();
                     user.setEmail(userRequest.getEmail());
                     user.setFirstName(userRequest.getFirstName());
-                    user.setPassword(userRequest.getPassword());
+                    user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
                     user.setPassword(userRequest.getPassword());
                     return userRepository.save(user);
                 }).orElseThrow(() -> new AlreadyExistsException("Oops! " + userRequest.getEmail() + " User already exists"));
@@ -59,5 +63,12 @@ public class UserService implements IUserService {
     @Override
     public UserDto convertUserToDto(User user) {
         return modelMapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public User getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return userRepository.findByEmail(email);
     }
 }
