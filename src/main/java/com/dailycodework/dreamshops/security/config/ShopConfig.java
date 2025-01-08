@@ -31,7 +31,7 @@ public class ShopConfig {
     private final ShopUserDetailsService userDetailsService;
     private final JwtAuthEntryPoint authEntryPoint;
 
-    private static final List<String> SECURED_URLS = List.of("/api/v1/carts/**", "/api/v1/cartItems/**", "/api/v1/products/**");
+    private static final List<String> SECURED_URLS = List.of("/api/v1/carts/**", "/api/v1/cartItems/**", "/api/v1/products/**", "/api/v1/auth/**");
 
 
     @Bean
