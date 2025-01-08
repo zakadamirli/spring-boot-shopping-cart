@@ -6,7 +6,6 @@ import com.dailycodework.dreamshops.model.Order;
 import com.dailycodework.dreamshops.response.ApiResponse;
 import com.dailycodework.dreamshops.service.order.IOrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
