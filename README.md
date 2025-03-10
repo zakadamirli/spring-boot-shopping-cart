@@ -1,6 +1,7 @@
 # Spring boot Shopping Cart
 
-## freeCodeCamp.org Spring Boot course
+## Spring Boot App
+### AWS products
 
 ### Practise: 
 - Collections (ArrayList, HashMap etc.)
