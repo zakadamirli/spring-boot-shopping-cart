@@ -1,6 +1,6 @@
 package com.dreamshops.controller;
 
-import com.dreamshops.service.image.StorageService;
+import com.dreamshops.service.image.AWS3Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/file")
-public class StorageController {
+@RequestMapping("/amazon-s3")
+public class AWS3Controller {
 
     @Autowired
-    private StorageService service;
+    private AWS3Service service;
 
-    @PostMapping("/upload")
+    @PostMapping("/upload-image")
     public ResponseEntity<String> uploadFile(@RequestParam(value = "file") MultipartFile file) {
         return new ResponseEntity<>(service.uploadFile(file), HttpStatus.OK);
     }
 
-    @GetMapping("/download/{fileName}")
+    @GetMapping("/download-file/{fileName}")
     public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String fileName) {
         byte[] data = service.downloadFile(fileName);
         ByteArrayResource resource = new ByteArrayResource(data);
@@ -32,7 +32,13 @@ public class StorageController {
                 .body(resource);
     }
 
-    @DeleteMapping("/delete/{fileName}")
+    @GetMapping("/show-image/{fileName}")
+    public ResponseEntity<String> getFileUrl(@PathVariable String fileName) {
+        String fileUrl = service.getFileUrl(fileName);
+        return ResponseEntity.ok(fileUrl);
+    }
+
+    @DeleteMapping("/delete-image/{fileName}")
     public ResponseEntity<String> deleteFile(@PathVariable String fileName) {
         return new ResponseEntity<>(service.deleteFile(fileName), HttpStatus.OK);
     }
