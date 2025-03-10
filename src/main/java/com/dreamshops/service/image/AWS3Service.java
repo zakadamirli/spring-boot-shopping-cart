@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @Service
 @Slf4j
-public class StorageService {
+public class AWS3Service {
 
     @Value("${application.bucket.name}")
     private String bucketName;
@@ -46,12 +46,14 @@ public class StorageService {
         return null;
     }
 
+    public String getFileUrl(String fileName) {
+        return s3Client.getUrl(bucketName, fileName).toString();
+    }
 
     public String deleteFile(String fileName) {
         s3Client.deleteObject(bucketName, fileName);
         return fileName + " removed ...";
     }
-
 
     private File convertMultiPartFileToFile(MultipartFile file) {
         File convertedFile = new File(file.getOriginalFilename());
