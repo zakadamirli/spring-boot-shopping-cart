@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class DynamoProductRepository {
 
-    private final DynamoDBMapper dynamoDBMapper;
+    final private DynamoDBMapper dynamoDBMapper;
 
     public String createProduct(DynamoProduct dynamoProduct) {
         dynamoDBMapper.save(dynamoProduct);
@@ -28,6 +28,7 @@ public class DynamoProductRepository {
         load.setInventory(dynamoProduct.getInventory());
         load.setDescription(dynamoProduct.getDescription());
         load.setCategory(dynamoProduct.getCategory());
+        dynamoDBMapper.save(load);
 
         return dynamoDBMapper.load(DynamoProduct.class, id);
     }
