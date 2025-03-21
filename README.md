@@ -10,51 +10,16 @@
 - 📋 **Order Management**: Create and track orders
 - 🖼️ **Image Management**: Upload and store product images with AWS S3 integration
 - 🗄️ **DynamoDB Integration**: Store some data in a NoSQL database
-- 🔌 **RESTful API**: Fully functional API interface
-- 📚 **Swagger/OpenAPI**: Automatically generated documentation for APIs
 
 ## 💻 Technical Stack
 
-- 🔧 **Framework**: Spring Boot 3.x
+- 🔧 **Framework**: Spring Boot 3
 - ☕ **Programming Language**: Java 21
-- 🐘 **Database**: PostgreSQL
+- 🐘 **Database**: PostgreSQL, Amazon RDS
 - 🧩 **NoSQL Database**: Amazon DynamoDB
 - ☁️ **Cloud Services**: AWS S3 (for images)
 - 🔒 **Security**: Spring Security and JWT authentication
 - 📝 **API Documentation**: Swagger/OpenAPI
-- 📦 **Dependency Management**: Maven
-
-## ⚙️ Setup and Usage
-
-### 📋 Requirements
-
-- ☕ JDK 21
-- 🛠️ Maven
-- 🐘 PostgreSQL
-- ☁️ AWS Account (for S3 and DynamoDB)
-
-### 🚀 Running the Application
-
-1. 📥 Clone the project:
-   ```
-   git clone [project_url]
-   cd dream-shops
-   ```
-
-2. 🔨 Compile with Maven:
-   ```
-   mvn clean install
-   ```
-
-3. ▶️ Run the application:
-   ```
-   mvn spring-boot:run
-   ```
-
-4. 🌐 Access the API:
-   ```
-   http://localhost:8080/swagger-ui.html
-   ```
 
 ## 🔌 API Endpoints
 
@@ -70,11 +35,10 @@ The application provides the following main API endpoints:
 
 📚 For complete API documentation, see the Swagger UI: `http://localhost:8080/swagger-ui.html`
 
-## 🔒 Security
 
-The application uses JWT (JSON Web Token) authentication. To obtain a valid token for creating API requests, send your login credentials to the `/api/v1/auth/login` endpoint.
+### 🚀 Clone the project
 
-## 👥 Contribution
 
-If you would like to contribute to the project, please submit a pull request. Create your own feature branch from the main branch and submit your changes.
-
+   ```
+   git clone https://github.com/zakadamirli/spring-boot-shopping-cart.git
+   ```
