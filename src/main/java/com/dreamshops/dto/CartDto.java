@@ -12,5 +12,4 @@ public class CartDto {
     private Long cartId;
     private Set<CartItemDto> items;
     private BigDecimal price;
-
 }
