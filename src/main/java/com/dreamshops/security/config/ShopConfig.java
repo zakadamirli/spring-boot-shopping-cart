@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,7 +33,7 @@ public class ShopConfig {
     private final JwtAuthEntryPoint authEntryPoint;
 
     private static final List<String> SECURED_URLS = List.of("/api/v1/carts/**",
-            "/api/v1/cartItems/**", "/api/v1/products/**", "/api/v1/auth/**");
+            "/api/v1/cartItems/**", "/api/v1/products/**", "/api/v1/auth/**", "/login/**");
 
 
     @Bean
@@ -72,12 +73,15 @@ public class ShopConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.csrf(AbstractHttpConfigurer::disable)
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers(SECURED_URLS.toArray(String[]::new)).permitAll()
-                        .anyRequest().permitAll());
-        http.authenticationProvider(authenticationProvider());
-        http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/oauth2/**", "/login/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").authenticated()
+                        .anyRequest().authenticated()
+                )
+                .oauth2Login(Customizer.withDefaults());
         return http.build();
     }
+
+
 }
