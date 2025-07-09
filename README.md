@@ -11,6 +11,9 @@
 - 🖼️ **Image Management**: Upload and store product images with AWS S3 integration
 - 🗄️ **DynamoDB Integration**: Store some data in a NoSQL database
 
+## ✊ Live Support Chat
+![Live Support Chat](https://github.com/user-attachments/assets/43ef8644-4b22-45e3-bfe6-373092ea800f)
+
 ## 💻 Technical Stack
 
 - 🔧 **Framework**: Spring Boot 3
