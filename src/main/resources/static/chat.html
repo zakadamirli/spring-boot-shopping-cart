@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Support Chat</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 400px;
+            height: 600px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+            font-size: 18px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 75%;
+            word-wrap: break-word;
+        }
+
+        .sent {
+            background: #DCF8C6;
+            align-self: flex-end;
+        }
+
+        .received {
+            background: #e4e6eb;
+            align-self: flex-start;
+        }
+
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 0 0 0 10px;
+            outline: none;
+        }
+
+        .chat-input button {
+            padding: 10px 15px;
+            border: none;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 0 0 10px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="chat-container">
+    <div class="chat-header">Support Chat</div>
+    <div class="chat-messages" id="chat-box"></div>
+    <div class="chat-input">
+        <input type="text" id="message" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    let stompClient = null;
+    const sender = "User"; // Buranı login olan istifadəçi adı ilə dəyişə bilərsən
+
+    function connect() {
+        const socket = new SockJS('/ws-chat');
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, function () {
+            stompClient.subscribe('/topic/messages', function (messageOutput) {
+                const message = JSON.parse(messageOutput.body);
+                showMessage(message);
+            });
+        });
+    }
+
+    function sendMessage() {
+        const content = document.getElementById('message').value;
+        if (!content.trim()) return;
+
+        const message = {
+            sender: sender,
+            content: content
+        };
+
+        stompClient.send("/app/chat", {}, JSON.stringify(message));
+        document.getElementById('message').value = '';
+    }
+
+    function showMessage(message) {
+        const chatBox = document.getElementById('chat-box');
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message');
+        messageDiv.classList.add(message.sender === sender ? 'sent' : 'received');
+        messageDiv.innerHTML = `<strong>${message.sender}:</strong> ${message.content}`;
+        chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    connect();
+</script>
+</body>
+</html>
