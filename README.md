@@ -12,7 +12,7 @@
 - 🗄️ **DynamoDB Integration**: Store some data in a NoSQL database
 
 ## ✊ Live Support Chat
-<img src="https://github.com/user-attachments/assets/43ef8644-4b22-45e3-bfe6-373092ea800f" width="500"/>
+<img src="https://github.com/user-attachments/assets/43ef8644-4b22-45e3-bfe6-373092ea800f" width="499"/>
 
 ## 💻 Technical Stack
 
