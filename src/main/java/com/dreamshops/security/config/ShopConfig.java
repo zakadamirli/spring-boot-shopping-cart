@@ -74,7 +74,7 @@ public class ShopConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/oauth2/**", "/login/**").permitAll()
+                        .requestMatchers("/", "/oauth2/**", "/login/**","/public/health").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").authenticated()
                         .anyRequest().authenticated()
                 )
